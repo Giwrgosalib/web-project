@@ -1,13 +1,19 @@
 function generateGrid() {
     const dateInput = document.getElementById("date");
-    const selectedDate = dateInput.value;
+    let selectedDate = dateInput.value;
     const inputContainer = document.getElementById("inputContainer");
+
     
     if (!selectedDate) {
       alert("Please select a date!");
       return;
     }
-    
+    selectedDate=selectedDate.split("-").reverse().join("-");
+    //format date like MM/DD/YYYY
+
+    selectedDate = selectedDate.split("-");
+    selectedDate = selectedDate[1] + "/" + selectedDate[0] + "/" + selectedDate[2];
+    console.log(selectedDate);
     if(document.getElementById("gridContainer") != null){
       const gridContainer=document.getElementById("gridContainer");
       gridContainer.innerHTML = "";}
@@ -41,7 +47,13 @@ function generateGrid() {
     for (let court = 1; court < 7; court++) {
       const courtCell = document.createElement("div");
       courtCell.classList.add("court-tittle");
-      courtCell.textContent = `Court ${court}`;
+      if(court<=3 && court>0)
+        courtCell.textContent = `Clay Court ${court}`;
+      else if(court==4)
+        courtCell.textContent = `Hard Court`;
+      else if(court>4 && court<7)
+        courtCell.textContent = `Grass Court ${court-4}`;
+      
       gridContainer.appendChild(courtCell);
     }
 
@@ -55,6 +67,8 @@ function generateGrid() {
       for (let court = 0; court < 6; court++) {
         const courtCell = document.createElement("div");
         courtCell.classList.add("court-cell");
+         //add id that represents the court number and hour
+        courtCell.setAttribute("id", `court:${court+1}_hour:${hour}`);
         const reservation = document.createElement("div");
         reservation.classList.add("Available");
         reservation.textContent = "ADD";
@@ -65,25 +79,45 @@ function generateGrid() {
     }
   }
 
-  function makeReservation() {
-    const reservation = this.querySelector(".court-cell>div");
-    if (reservation.classList.contains("reservation")) {
-      reservation.classList.remove("reservation");
-      reservation.parentNode.classList.remove("reservation");
-      reservation.classList.add("Available");
-      reservation.textContent = "ADD";
-      return;
-    }
-    else if (reservation.classList.contains("Available")) {
-    reservation.classList.remove("Available");
-    reservation.classList.add("reservation");
-    reservation.textContent = "Reservation";
-    reservation.parentNode.classList.add("reservation");
+
+//function to make reservation
+function makeReservation(event) {
+    const courtCell = event.currentTarget;
+    if (courtCell.firstChild.classList.contains("Available")) {
+      courtCell.firstChild.classList.remove("Available");
+      courtCell.firstChild.classList.add("reservation");
+      courtCell.firstChild.textContent = "+";
+      courtCell.classList.add("reservation");
+      courtCell.addEventListener("click", cancelReservation);
+      const courtCells=document.querySelectorAll(".court-cell");
+      for(let i=0;i<courtCells.length;i++){
+        courtCells[i].removeEventListener("click", makeReservation);}
   }}
+//clear the last reservation and make the court available again
+function cancelReservation(event) {
+    const courtCell = event.currentTarget;
+    if (courtCell.firstChild.classList.contains("reservation")) {
+      courtCell.firstChild.classList.remove("reservation");
+      courtCell.firstChild.classList.add("Available");
+      courtCell.firstChild.textContent = "ADD";
+      courtCell.classList.remove("reservation");
+      courtCell.addEventListener("click", makeReservation);
+      const courtCells=document.querySelectorAll(".court-cell");
+      for(let i=0;i<courtCells.length;i++){
+        courtCells[i].addEventListener("click", makeReservation);}
+    }
+  }
+
+//funtion to keep id on submit
+  
 
   function formatTime(time) {
     return time.toString().padStart(2, "0") + ":00";
   }
 
 let today = new Date().toISOString().split('T')[0];
+let maxDate = new Date();
+maxDate.setDate(maxDate.getDate() + 7);
+maxDate = maxDate.toISOString().split('T')[0];
 document.getElementById("date").setAttribute('min', today);
+document.getElementById("date").setAttribute('max', maxDate);
