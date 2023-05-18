@@ -75,11 +75,13 @@ function generateGrid() {
       return;
     }
     else if (reservation.classList.contains("Available")) {
-    reservation.classList.remove("Available");
-    reservation.classList.add("reservation");
-    reservation.textContent = "Reservation";
-    reservation.parentNode.classList.add("reservation");
-  }}
+      reservation.classList.remove("Available");
+      reservation.classList.add("reservation");
+      reservation.textContent = "Reservation";
+      reservation.parentNode.classList.add("reservation");
+    }
+    generateCoaches();
+}
 
   function formatTime(time) {
     return time.toString().padStart(2, "0") + ":00";
@@ -87,3 +89,62 @@ function generateGrid() {
 
 let today = new Date().toISOString().split('T')[0];
 document.getElementById("date").setAttribute('min', today);
+
+// coaches
+function generateCoaches() {
+  // coach container
+  if(document.getElementById("coachContainer") != null){
+    const coachContainer=document.getElementById("coachContainer");
+    coachContainer.innerHTML = "Select a coach for your reservation:";}
+  else{
+    const coachContainer = document.createElement("div");
+    coachContainer.classList.add("container");
+    gridContainer.parentNode.insertBefore(coachContainer, gridContainer.nextSibling);
+    coachContainer.textContent="Select a coach for your reservation:";
+    coachContainer.setAttribute("id", "coachContainer");
+  }
+
+  // radio buttons for coach selection
+  const coach0 = document.createElement("div");
+  coach0.classList.add("form-check");
+  coach0.innerHTML = `<input class="form-check-input" type="radio" name="coach" id="coach0" value="coach0" checked>`;
+  coach0.innerHTML += `<label class="form-check-label" for="coach0">No coach</label>`;
+  coachContainer.appendChild(coach0);
+
+  const coach1 = document.createElement("div");
+  coach1.classList.add("form-check");
+  coach1.innerHTML = `<input class="form-check-input" type="radio" name="coach" id="coach1" value="coach1">`;
+  coach1.innerHTML += `<label class="form-check-label" for="coach1">Dimitris Papadopoulos</label>`;
+  coachContainer.appendChild(coach1);
+
+  const coach2 = document.createElement("div");
+  coach2.classList.add("form-check");
+  coach2.innerHTML = `<input class="form-check-input" type="radio" name="coach" id="coach2" value="coach2">`;
+  coach2.innerHTML += `<label class="form-check-label" for="coach2">Maria Georgiou</label>`;
+  coachContainer.appendChild(coach2);
+
+  const coach3 = document.createElement("div");
+  coach3.classList.add("form-check");
+  coach3.innerHTML = `<input class="form-check-input" type="radio" name="coach" id="coach3" value="coach3">`;
+  coach3.innerHTML += `<label class="form-check-label" for="coach3">Petros Konstantinou</label>`;
+  coachContainer.appendChild(coach3);
+
+  const coach4 = document.createElement("div");
+  coach4.classList.add("form-check");
+  coach4.innerHTML = `<input class="form-check-input" type="radio" name="coach" id="coach4" value="coach4">`;
+  coach4.innerHTML += `<label class="form-check-label" for="coach4">Anna Papadopoulou</label>`;
+  coachContainer.appendChild(coach4);
+
+  // submit button
+  const submitButton = document.createElement("button");
+  submitButton.classList.add("btn", "btn-dark");
+  submitButton.textContent = "Submit";
+  submitButton.addEventListener("click", submitReservation);
+  coachContainer.appendChild(submitButton);
+
+}
+function submitReservation() {
+  alert("Your reservation has been submitted!");
+  location.reload();
+}
+
