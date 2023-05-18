@@ -1,0 +1,98 @@
+body {
+    font-family: Arial, sans-serif;
+  }
+
+  #gridContainer {
+    margin-left: 0px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: grid;
+    grid-template-columns: auto repeat(7, 10vw);
+    grid-template-rows: auto repeat(14, 5vh);
+    padding-left: 15vw;
+    padding-right: 15vw;
+  }
+
+  .date-cell {
+    margin-top: 10px;
+    background-color: #9facec;
+    font-weight: bold;
+    grid-row: 1 / span 1;
+    grid-column: 1 / span 7;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    margin-bottom: 5px;
+  }
+
+  .hour-cell {
+    background-color: #f3f3f3;
+    grid-column: 1 / span 1;
+    padding: 15px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+  }
+
+  .court-tittle {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    font-size: small;
+    
+  }
+
+  .court-cell {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    word-wrap: break-word;
+  }
+  
+
+  .Available {
+    display: none;
+    font-size: small;
+    word-wrap: break-word;
+    justify-self: center;
+    align-self: center;
+    padding: 5px;
+  }
+
+  .court-cell:hover>.Available:not(.reserved){
+    display: inline;
+  }
+
+
+  .court-cell:hover:not(.reserved, .reservation) {
+    background-color: #f2f237;
+  }
+  
+  .court-cell.reservation {
+    
+    word-wrap: break-word;
+    background-color: #4caf50;
+    color: #fff;
+    }
+
+  .reserved {
+    background-color: #e53935;
+  }
+
+  #prompt{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: large;
+  }
