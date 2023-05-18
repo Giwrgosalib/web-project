@@ -3,19 +3,16 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Facilites</title>
+    <title>Facilities</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
-
   </head>
   <body>
     
 
     <nav class="navbar bg-body-tertiary bg-gradient sticky-top" data-bs-theme="dark">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">GM Tennis Club</a>
+        <a class="navbar-brand" href="home.html">GM Tennis Club</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -27,22 +24,20 @@
           <div class="offcanvas-body">
             <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
               <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="/home.html">Home</a>
+                <a class="nav-link" aria-current="page" href="home.html">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active hover-shadow" href="/screen2.html">Facilities &amp; Services</a>
+                <a class="nav-link active hover-shadow" href="facilities.html">Facilities &amp; Services</a>
+              </li>
+      
+              <li class="nav-item">
+                <a class="nav-link" href="reservations.html">Reservations</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Tournaments &amp; matches</a>
+                <a class="nav-link" href="login.html">Profile</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Reservations</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/login.html">Profile</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/contactus.html">Contact us</a>
+                <a class="nav-link" href="contactus.html">Contact us</a>
               </li>
             </ul>
           </div>
@@ -51,7 +46,7 @@
     </nav>
 
     <div class="text-bg-dark bg-gradient p-2">
-    <h1 class="text-center">FACILITIES</h1>
+    <h1 class="text-center" id="facilities">FACILITIES</h1>
     </div>
 
     <div class="bg-body-secondary">
@@ -95,7 +90,7 @@
     </div>
 
     <div class="text-bg-dark bg-gradient p-2">
-        <h2 class="text-center">Services</h2>
+        <h2 class="text-center" id="services">Services</h2>
     </div>
     
     <div class="bg-body-secondary">
@@ -108,7 +103,7 @@
       <div class="container-sm">
           <p class="text-decoration-underline">Court Reservation:</p>
           <p>Our tennis club offers court reservation for all members. You can reserve a court for a friendly game or for a training session. You can also reserve a court for a tennis lesson. 
-              You can reserve a court for a maximum of 2 hours. You can reserve a court up to 7 days in advance.</p>      
+              You can reserve a court for a maximum of 1.5 hours so they could be prepared and maintained for other players. You can reserve a court up to 7 days in advance.</p>      
       </div>
 
       <div class="container-sm">
@@ -188,27 +183,29 @@
       </div>
     </div>
 
-      <script>
-        $(document).ready(function() {
-            // Initialize the photo carousel
-            $('.carousel').carousel({
-                interval: false
-            });
-            
-            // Handle the click event for the images
-            $('.img-fluid').click(function() {
-                // Get the source of the clicked image
-                var src = $(this).attr('src');
-                
-                // Set the source of the first slide in the photo carousel
-                $('.carousel-item:first').find('img').attr('src', src);
-                
-                // Show the photo carousel
-                $('#myModal').modal('show');
-            });
-        });
-    </script>
     
+     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+  // Initialize the photo carousel
+  const carousel = document.querySelector('.carousel');
+  new bootstrap.Carousel(carousel, {
+    interval: false
+  });
+  
+  // Attach click event listener to all images with the class 'img-fluid'
+  const images = document.querySelectorAll('.img-fluid');
+  images.forEach(function(image) {
+    image.addEventListener('click', function() {
+      const src = this.getAttribute('src');
+      const carouselItem = document.querySelector('.carousel-item:first-of-type');
+      carouselItem.querySelector('img').setAttribute('src', src);
+      const modal = new bootstrap.Modal(document.querySelector('#myModal'));
+      modal.show();
+    });
+  });
+})
+    </script> 
+
      <!-- Modal -->
      <div class="modal fade modal-custom" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
       <div class="modal-dialog modal-lg" role="document">
@@ -258,7 +255,7 @@
         </div>
       </div>
     </div>
-
+    
 
   <footer class="bg-dark py-5" >
     <div class="container text-bg-dark ">
