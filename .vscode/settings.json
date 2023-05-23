@@ -1,0 +1,16 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "Geo",
+            "database": "C:\\Users\\georg\\OneDrive - University of Patras\\Desktop\\school\\web\\database\\tennis.db"
+        },
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "MyDB",
+            "database": "${workspaceFolder:project}/model/tennis.db"
+        }
+    ]
+}

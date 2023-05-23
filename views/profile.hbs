@@ -1,0 +1,125 @@
+<div class="container-fluid bg-secondary-subtle bg-gradient">
+    {{#with user}}
+    <ul class="list-group">
+        <li class="list-group-item">
+            <div class="row w-100">
+
+                <div class="col-sm-3">
+                    <p class="mb-0">Full Name</p>
+                </div>
+                <div class="col-sm-9">
+                    <p class="text-muted mb-0">{{Name}} </p>
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row w-100">
+                <div class="col-sm-3">
+                    <p>Date Of Birth</p>
+                </div>
+                <div class="col-sm-9">
+                    <p class="text-muted mb-0">{{Date_of_birth}}</p>
+                </div>
+            </div>
+        </li>
+
+        <li class="list-group-item">
+            <div class="row w-100">
+                <div class="col-sm-3">
+                    <p class="mb-0">Email</p>
+                </div>
+                <div class="col-sm-5">
+                    <p class="text-muted mb-0">{{email}}</p>
+                </div>
+                <div class="col-sm-auto">
+                    <button type="button" class="btn btn-dark w-100 ">Change</button>
+
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row w-100">
+                <div class="col-sm-3">
+                    <p class="mb-0">Phone</p>
+                </div>
+                <div class="col-sm-5">
+                    <p class="text-muted mb-0">{{Phone}}</p>
+                </div>
+                <div class="col-sm-auto">
+                    <button type="button" class="btn btn-dark w-100">Change</button>
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row w-100">
+                <div class="col-sm-3">
+                    <p class="mb-0">Mobile</p>
+                </div>
+                <div class="col-sm-5">
+                    <p class="text-muted mb-0">{{Mobile}}</p>
+                </div>
+                <div class="col-sm-auto ">
+                    <button type="button" class="btn btn-dark w-100">Change</button>
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-sm-3">
+                    <p class="mb-0">Address</p>
+                </div>
+                <div class="col-sm-5">
+                    <p class="text-muted mb-0">{{Address}}</p>
+                </div>
+                <div class="col-sm-auto ml-0">
+                    <button type="button" class="btn btn-dark w-100">Change</button>
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-sm-3">
+                    <p>Member Since</p>
+                </div>
+                <div class="col-sm-9">
+                    <p class="text-muted">{{RegDate}}</p>
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+
+                <div class="col-sm-12">
+                    <div class="container mt-3">
+                        <h1>Reservation History</h1>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Court</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each reservations}}
+                                <tr>
+                                    <td>{{date}}</td>
+                                    <td>{{start_time}}</td>
+                                    <td> {{Court_type}}</td>
+                                    <td><a href="/delete/{{id}}" class="btn btn-danger">Delete</a></td>
+                                    {{#if is_past}}
+                                    <td><a href="/edit/{{id}}" class="btn btn-primary">Edit</a></td>
+                                    {{/if}}
+                                </tr>
+                                {{/each}}
+
+
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
