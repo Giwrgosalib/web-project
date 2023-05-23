@@ -80,6 +80,7 @@ function generateGrid() {
   }
 
 
+
 //function to make reservation
 function makeReservation(event) {
     const courtCell = event.currentTarget;
@@ -92,7 +93,9 @@ function makeReservation(event) {
       const courtCells=document.querySelectorAll(".court-cell");
       for(let i=0;i<courtCells.length;i++){
         courtCells[i].removeEventListener("click", makeReservation);}
-  }}
+  }
+  generateCoaches();
+}
 //clear the last reservation and make the court available again
 function cancelReservation(event) {
     const courtCell = event.currentTarget;
@@ -108,8 +111,6 @@ function cancelReservation(event) {
     }
   }
 
-//funtion to keep id on submit
-  
 
   function formatTime(time) {
     return time.toString().padStart(2, "0") + ":00";
@@ -121,3 +122,63 @@ maxDate.setDate(maxDate.getDate() + 7);
 maxDate = maxDate.toISOString().split('T')[0];
 document.getElementById("date").setAttribute('min', today);
 document.getElementById("date").setAttribute('max', maxDate);
+
+
+// coaches
+function generateCoaches() {
+  // coach container
+  if(document.getElementById("coachContainer") != null){
+    const coachContainer=document.getElementById("coachContainer");
+    coachContainer.innerHTML = "Select a coach for your reservation:";}
+  else{
+    const coachContainer = document.createElement("div");
+    coachContainer.classList.add("container");
+    gridContainer.parentNode.insertBefore(coachContainer, gridContainer.nextSibling);
+    coachContainer.textContent="Select a coach for your reservation:";
+    coachContainer.setAttribute("id", "coachContainer");
+  }
+
+  // radio buttons for coach selection
+  const coach0 = document.createElement("div");
+  coach0.classList.add("form-check");
+  coach0.innerHTML = `<input class="form-check-input" type="radio" name="coach" id="coach0" value="coach0" checked>`;
+  coach0.innerHTML += `<label class="form-check-label" for="coach0">No coach</label>`;
+  coachContainer.appendChild(coach0);
+
+  const coach1 = document.createElement("div");
+  coach1.classList.add("form-check");
+  coach1.innerHTML = `<input class="form-check-input" type="radio" name="coach" id="coach1" value="coach1">`;
+  coach1.innerHTML += `<label class="form-check-label" for="coach1">Dimitris Papadopoulos</label>`;
+  coachContainer.appendChild(coach1);
+
+  const coach2 = document.createElement("div");
+  coach2.classList.add("form-check");
+  coach2.innerHTML = `<input class="form-check-input" type="radio" name="coach" id="coach2" value="coach2">`;
+  coach2.innerHTML += `<label class="form-check-label" for="coach2">Maria Georgiou</label>`;
+  coachContainer.appendChild(coach2);
+
+  const coach3 = document.createElement("div");
+  coach3.classList.add("form-check");
+  coach3.innerHTML = `<input class="form-check-input" type="radio" name="coach" id="coach3" value="coach3">`;
+  coach3.innerHTML += `<label class="form-check-label" for="coach3">Petros Konstantinou</label>`;
+  coachContainer.appendChild(coach3);
+
+  const coach4 = document.createElement("div");
+  coach4.classList.add("form-check");
+  coach4.innerHTML = `<input class="form-check-input" type="radio" name="coach" id="coach4" value="coach4">`;
+  coach4.innerHTML += `<label class="form-check-label" for="coach4">Anna Papadopoulou</label>`;
+  coachContainer.appendChild(coach4);
+
+  // submit button
+  const submitButton = document.createElement("button");
+  submitButton.classList.add("btn", "btn-dark");
+  submitButton.textContent = "Submit";
+  submitButton.addEventListener("click", submitReservation);
+  coachContainer.appendChild(submitButton);
+
+}
+function submitReservation() {
+  alert("Your reservation has been submitted!");
+  location.reload();
+}
+
