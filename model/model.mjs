@@ -2,7 +2,7 @@
 
 import { Database } from "sqlite-async";
 import bcrypt from 'bcrypt';
-
+let saltRounds = 10;
 let db;
 try {
     db = await Database.open("./model/tennis.db");
@@ -34,7 +34,7 @@ export let login= async (email, password) => {
 }
 
 export let showReservationHistory= async (userId) => {
-    const stmt = await db.prepare("SELECT * FROM Reservation join Court on Reservation.court_id = Court.id WHERE UserId = ? ORDER BY Date DESC, Hour DESC ");
+    const stmt = await db.prepare("SELECT * FROM Reservation join Court on Reservation.court_id = Court.id WHERE user_id = ? ORDER BY res_date DESC, start_time DESC ");
     const reservations = await stmt.all(userId);
     await stmt.finalize();
     return reservations;
@@ -51,7 +51,6 @@ export let deleteReservation= async (req) => {
     const stmt = await db.prepare("DELETE FROM Reservation WHERE resid = ?");
     await stmt.run(req.params.id);
     await stmt.finalize();
-    res.redirect("/profile");
 }
 
 export let updateReservation= async (req) => {
