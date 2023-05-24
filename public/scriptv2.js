@@ -1,3 +1,5 @@
+const model=await import("../model/model.mjs");
+
 document.addEventListener('DOMContentLoaded', function () {
     const generateButton = document.getElementById('generateButton');
     generateButton.addEventListener('click', generateGrid);})
@@ -5,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function generateGrid() {
       const dateInput = document.getElementById('dateInput');
       const selectedDate = dateInput.value;
-  
+      const data=model.showReservedHours(selectedDate);
       if (!selectedDate) {
         alert('Please select a date!');
         return;
@@ -105,9 +107,3 @@ document.addEventListener('DOMContentLoaded', function () {
       }
 
       
-      /*  function deleteReservation(event) {
-        const courtCell = event.currentTarget;
-        const courtId = courtCell.getAttribute('data-court-id');
-        const hourId = courtCell.getAttribute('data-hour-id');
-        
-    }*/
