@@ -3,14 +3,7 @@ import {Coach as CoachModel, Court as CourtModel, Reservation as ReservationMode
 
 const model=await import("../model/model.mjs");
 
-export async function showReservedHours(req, res) {
-    try{
-        const reservations = await model.showReservedHours(req.params.date);
-        res.render("profile", {reservations: reservations , user: req.session.user});
-    }catch (e) {
-        res.render("error", {error: e});
-    }
-}
+
 
 export async function showProfile(req, res) {
     try{
@@ -45,6 +38,7 @@ export async function showFacilities(req, res) {
         res.render("error", {error: e});
     }
 }
+
 export async function showLogin(req, res) {
     try{
         res.render("login");
@@ -101,3 +95,20 @@ export async function updateReservation(req,res){
     }
 }
 
+export async function showReservation(req, res) {
+    try{
+       res.render("reservation");
+    }
+    catch (e) {
+        res.render("error", {error: e});
+    }
+}
+export async function addReservation(req, res) {
+    try{
+        const reservation = await model.addReservation(req.body.date, req.body.time,req.body.coach, req.body.court, req.session.user.id);
+        res.redirect("/profile");
+    }
+    catch (e) {
+        res.render("error", {error: e});
+    }
+}
