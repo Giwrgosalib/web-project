@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS User (
 	Name varchar,
 	Registration_Date date,
 	date_of_birth date,
-	Password varchar,
+	Password varchar(60),
 	is_Admin boolean,
 	Address varchar,
 	Phone integer,

@@ -6,26 +6,29 @@ const model=await import("../model/model.mjs");
 export async function showReservedHours(req, res) {
     try{
         const reservations = await model.showReservedHours(req.params.date);
+        console.log(reservations);
         res.render("profile", {reservations: reservations , user: req.session.user});
     }catch (e) {
-        res.render("error", {error: e});
+        console.log(e);
     }
 }
 
 export async function showProfile(req, res) {
     try{
         const reservations = await model.showReservationHistory(req.session.user.id);
+        console.log(reservations);
         res.render("profile", {reservations: reservations , user: req.session.user});
+        
     }
     catch (e) {
-        res.render("error", {error: e});
+        console.log(e);
     }
 }
 export async function showContactUs(req, res) {
     try{
         res.render("contactus");
     }catch (e) {
-        res.render("error", {error: e});
+        console.log(e);
     }
 }
 
@@ -33,7 +36,7 @@ export async function showHome(req, res) {
     try{
         res.render("home");
     }catch (e) {
-        res.render("error", {error: e});
+        console.log(e);
     }
 }
 
@@ -42,20 +45,19 @@ export async function showFacilities(req, res) {
     try{
         res.render("facilities");
     }catch (e) {
-        res.render("error", {error: e});
+        console.log(e);
     }
 }
 export async function showLogin(req, res) {
     try{
         res.render("login");
     }catch (e) {
-        res.render("error", {error: e});
+        console.log(e);
     }
 }
 
 export async function login(req, res) {
     try{
-        console.log(req.body);
         const user = await model.login(req.body.email, req.body.password);
         req.session.user = user;
         res.redirect("/home");
@@ -78,7 +80,7 @@ export async function updateUser(req,res){
         res.redirect("/home");
     }
     catch (e) {
-        res.render("error", {error: e});
+        console.log(e);
     }
 }
 
@@ -88,7 +90,7 @@ export async function deleteReservation(req, res) {
         res.redirect("/profile");
     }
     catch (e) {
-        res.render("error", {error: e});
+        console.log(e);
     }
 }
 
@@ -97,7 +99,7 @@ export async function updateReservation(req,res){
         res.redirect("/reservation/" + req.params.id);
     }
     catch (e) { 
-        res.render("error", {error: e});
+        console.log(e);
     }
 }
 

@@ -18,7 +18,7 @@
                     <p>Date Of Birth</p>
                 </div>
                 <div class="col-sm-9">
-                    <p class="text-muted mb-0">{{Date_of_birth}}</p>
+                    <p class="text-muted mb-0">{{date_of_birth}}</p>
                 </div>
             </div>
         </li>
@@ -29,7 +29,7 @@
                     <p class="mb-0">Email</p>
                 </div>
                 <div class="col-sm-5">
-                    <p class="text-muted mb-0">{{email}}</p>
+                    <p class="text-muted mb-0">{{Email}}</p>
                 </div>
                 <div class="col-sm-auto">
                     <button type="button" class="btn btn-dark w-100 ">Change</button>
@@ -82,13 +82,12 @@
                     <p>Member Since</p>
                 </div>
                 <div class="col-sm-9">
-                    <p class="text-muted">{{RegDate}}</p>
+                    <p class="text-muted">{{Registration_Date}}</p>
                 </div>
             </div>
         </li>
         <li class="list-group-item">
             <div class="row">
-
                 <div class="col-sm-12">
                     <div class="container mt-3">
                         <h1>Reservation History</h1>
@@ -101,25 +100,23 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {{#each reservations}}
+                            {{#each reservations}}
                                 <tr>
-                                    <td>{{date}}</td>
-                                    <td>{{start_time}}</td>
-                                    <td> {{Court_type}}</td>
-                                    <td><a href="/delete/{{id}}" class="btn btn-danger">Delete</a></td>
+                                    <td>{{this.res_date}}</td>
+                                    <td>{{this.start_time}}</td>
+                                    <td> {{this.Court_type}}</td>
+                                    <td><a href="/delete/{{this.resid}}" class="btn btn-danger">Delete</a></td>
                                     {{#if is_past}}
-                                    <td><a href="/edit/{{id}}" class="btn btn-primary">Edit</a></td>
+                                    <td><a href="/edit/{{this.resid}}" class="btn btn-primary">Edit</a></td>
                                     {{/if}}
                                 </tr>
-                                {{/each}}
-
-
+                            {{/each}}
                             </tbody>
-
                         </table>
                     </div>
                 </div>
             </div>
         </li>
     </ul>
+    {{/with}}
 </div>
