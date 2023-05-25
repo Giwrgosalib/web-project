@@ -16,5 +16,6 @@ router.route('/logout').get((req, res) => {
     res.redirect('/home');
 });
 router.route('/contactus').get(controller.showContactUs);
-
+router.route('/profile').post(controller.checkAuthentication, controller.updateUser);
+router.get('/profile/delete:resid', controller.deleteReservation);
 export default router;

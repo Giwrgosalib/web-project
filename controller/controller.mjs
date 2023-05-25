@@ -16,9 +16,7 @@ export async function showReservedHours(req, res) {
 export async function showProfile(req, res) {
     try{
         const reservations = await model.showReservationHistory(req.session.user.id);
-        console.log(reservations);
         res.render("profile", {reservations: reservations , user: req.session.user});
-        
     }
     catch (e) {
         console.log(e);
@@ -26,7 +24,7 @@ export async function showProfile(req, res) {
 }
 export async function showContactUs(req, res) {
     try{
-        res.render("contactus");
+        res.render("contactus", {user: req.session.user});
     }catch (e) {
         console.log(e);
     }
@@ -34,7 +32,7 @@ export async function showContactUs(req, res) {
 
 export async function showHome(req, res) {
     try{
-        res.render("home");
+        res.render("home", {user: req.session.user});
     }catch (e) {
         console.log(e);
     }
@@ -43,14 +41,14 @@ export async function showHome(req, res) {
 
 export async function showFacilities(req, res) {
     try{
-        res.render("facilities");
+        res.render("facilities", {user: req.session.user});
     }catch (e) {
         console.log(e);
     }
 }
 export async function showLogin(req, res) {
     try{
-        res.render("login");
+        res.render("login", {user: req.session.user});
     }catch (e) {
         console.log(e);
     }
@@ -59,6 +57,7 @@ export async function showLogin(req, res) {
 export async function login(req, res) {
     try{
         const user = await model.login(req.body.email, req.body.password);
+
         req.session.user = user;
         res.redirect("/home");
     }catch (e) {
@@ -76,7 +75,7 @@ export async function checkAuthentication(req, res, next) {
 
 export async function updateUser(req,res){
     try{
-        await model.updateUser(req.body.address, req.body.phone, req.body.mobile, req.body.password, req.session.user.id);
+        await model.updateUser(req,res);
         res.redirect("/home");
     }
     catch (e) {
@@ -86,7 +85,8 @@ export async function updateUser(req,res){
 
 export async function deleteReservation(req, res) {
     try{
-        await model.deleteReservation(req.params.id);
+        console.log(req.params.resid);
+        await model.deleteReservation(req.params.resid);
         res.redirect("/profile");
     }
     catch (e) {

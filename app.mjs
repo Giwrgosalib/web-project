@@ -12,10 +12,12 @@ const port=process.env.PORT || 3000;
 app.use(express.urlencoded({extended: false})); // Parse URL-encoded bodies
 app.use(express.static("public"));
 //session management
+
 app.use(session({
     secret: "secret-key",
     resave: false,
     saveUninitialized: false,
+    cookie: {maxAge: 3600000}
 }));
 
 app.engine(".hbs", engine({extname: ".hbs"}));

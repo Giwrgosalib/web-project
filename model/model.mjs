@@ -46,9 +46,9 @@ export let showReservationHistory= async (userId) => {
 }
 
 export let updateUser= async (req, res) => {
-    const stmt = await db.prepare("UPDATE User SET Address=?, Phone=?, Mobile=? WHERE id = ?");
+    const stmt = await db.prepare("UPDATE User SET Address=?,Email=?, Phone=?, Mobile=?,Password=? WHERE id = ?");
     const hash = await bcrypt.hash(req.body.password, saltRounds);
-    await stmt.run(req.body.address, req.body.phone, req.body.mobile, hash, req.session.user.id);
+    await stmt.run(req.body.address,req.body.email, req.body.phone, req.body.mobile,hash, req.session.user.id);
     await stmt.finalize();
 }
 

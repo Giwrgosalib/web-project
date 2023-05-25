@@ -31,10 +31,6 @@
                 <div class="col-sm-5">
                     <p class="text-muted mb-0">{{Email}}</p>
                 </div>
-                <div class="col-sm-auto">
-                    <button type="button" class="btn btn-dark w-100 ">Change</button>
-
-                </div>
             </div>
         </li>
         <li class="list-group-item">
@@ -44,9 +40,6 @@
                 </div>
                 <div class="col-sm-5">
                     <p class="text-muted mb-0">{{Phone}}</p>
-                </div>
-                <div class="col-sm-auto">
-                    <button type="button" class="btn btn-dark w-100">Change</button>
                 </div>
             </div>
         </li>
@@ -58,9 +51,6 @@
                 <div class="col-sm-5">
                     <p class="text-muted mb-0">{{Mobile}}</p>
                 </div>
-                <div class="col-sm-auto ">
-                    <button type="button" class="btn btn-dark w-100">Change</button>
-                </div>
             </div>
         </li>
         <li class="list-group-item">
@@ -70,9 +60,6 @@
                 </div>
                 <div class="col-sm-5">
                     <p class="text-muted mb-0">{{Address}}</p>
-                </div>
-                <div class="col-sm-auto ml-0">
-                    <button type="button" class="btn btn-dark w-100">Change</button>
                 </div>
             </div>
         </li>
@@ -86,6 +73,76 @@
                 </div>
             </div>
         </li>
+        <li class="list-group-item">
+            <div class="row">
+                <button type="button" id="editButton" class="btn btn-dark w-100">Change</bur>
+            </div>
+        </li>
+        
+        <form id="profileForm" method="post" style="display: none;">
+            
+                <li class="list-group-item">
+                <div class="row w-100">
+                    <div class="col-sm-3">
+                        <label for="emailInput">New Email</label>
+                    </div>
+                    <div class="col-sm-5">
+                        <input type="email" id="emailInput" name="email" value={{Email}}>
+                    </div>
+                </div>
+                </li>
+               <li class="list-group-item">
+                <div class="row w-100">
+                    <div class="col-sm-3">
+                        <label for="phoneInput">New Phone</label>
+                    </div>
+                    <div class="col-sm-5">
+                        <input type="text" id="phoneInput" name="phone" value={{Phone}}>
+                    </div>
+                </div>
+                </li>
+                <li class="list-group-item">
+                <div class="row w-100">
+                    <div class="col-sm-3">
+                        <label for="email">New Mobile</label>
+                    </div>
+                    <div class="col-sm-5">
+                        <input type="text" id="mobileInput" name="mobile" value={{Mobile}}>
+                    </div>
+                </div></li>
+                <li class="list-group-item">
+                <div class="row w-100">
+                    <div class="col-sm-3">
+                        <label for="addrInput">New Address</label>
+                    </div>
+                    <div class="col-sm-5">
+                        <input type="text" id="addrInput" name="address" value={{Address}}>
+                    </div>
+                </div></li>
+                <li class="list-group-item">
+            <div class="row w-100">
+                    <div class="col-sm-3">
+                        <label for="passwordInput">New Password</label>
+                    </div>
+                    <div class="col-sm-5">
+                        <input type="password" name="password" id="passwordInput" value="">
+                    </div>
+                </div></li>
+            <li class="list-group-item">
+            <div class="row w-100">
+                    <div class="col-sm-3">
+                        <label for="passwordConfirmInput">Confirm New Password</label>
+                    </div>
+                    <div class="col-sm-5">
+                        <input type="password" id="passwordConfirmInput" value="">
+                    </div>
+                </div>
+            </li>
+            <li class="list-group-item">
+            <button id="saveButton" class="btn btn-dark w-100">Save Changes</button>
+            </li>
+    </form>
+{{/with}}
         <li class="list-group-item">
             <div class="row">
                 <div class="col-sm-12">
@@ -105,9 +162,12 @@
                                     <td>{{this.res_date}}</td>
                                     <td>{{this.start_time}}</td>
                                     <td> {{this.Court_type}}</td>
-                                    <td><a href="/delete/{{this.resid}}" class="btn btn-danger">Delete</a></td>
-                                    {{#if is_past}}
+                                    <td><a href="profile/delete?resid={{this.resid}}" class="btn btn-danger">Delete</a></td>
+                                    {{#unless is_past}}
                                     <td><a href="/edit/{{this.resid}}" class="btn btn-primary">Edit</a></td>
+                                    {{/unless}}
+                                    {{#if is_past}}
+                                    <td><p></p></td>
                                     {{/if}}
                                 </tr>
                             {{/each}}
@@ -118,5 +178,36 @@
             </div>
         </li>
     </ul>
-    {{/with}}
+    
+    <script>
+        "use strict";
+        document.addEventListener('DOMContentLoaded', () => {
+  const editButton = document.getElementById('editButton');
+  const profileForm = document.getElementById('profileForm');
+  const saveButton = document.getElementById('saveButton');
+  const passwordInput = document.getElementById('passwordInput');
+  const passwordConfirmInput = document.getElementById('passwordConfirmInput');
+
+//check if passwords match
+  editButton.addEventListener('click', () => {
+    // Toggle the visibility of the form
+    profileForm.style.display = profileForm.style.display === 'none' ? 'block' : 'none';
+  });
+
+  saveButton.addEventListener('click', () => {
+    // Check if the passwords match
+    if (passwordInput.value != passwordConfirmInput.value) {
+      alert('Passwords do not match');
+      return;
+    }
+    else if (passwordInput.value.length < 8) {
+      alert('Password must be at least 8 characters');
+      return;
+    }
+    else{
+    // Submit the form
+    profileForm.submit();}
+  });
+});
+    </script>
 </div>
