@@ -4,8 +4,6 @@ import router from "./routes/router.mjs";
 import session from "express-session";
 
 
-
-
 const app = new express();
 const port=process.env.PORT || 3000;
 
@@ -19,6 +17,8 @@ app.use(session({
     saveUninitialized: false,
     cookie: {maxAge: 3600000}
 }));
+app.use(express.json()); // Parse JSON bodies
+
 
 app.engine(".hbs", engine({extname: ".hbs"}));
 app.set("view engine", ".hbs"); // Set default view engine

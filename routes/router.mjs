@@ -18,4 +18,6 @@ router.route('/logout').get((req, res) => {
 router.route('/contactus').get(controller.showContactUs);
 router.route('/profile').post(controller.checkAuthentication, controller.updateUser);
 router.get('/profile/delete:resid', controller.deleteReservation);
+router.route('/reservations').get(controller.checkAuthentication, controller.showResButton).post(controller.checkAuthentication, controller.addReservation);
+router.get('/reservations/data/:date', controller.showReservedHours);
 export default router;

@@ -10,12 +10,7 @@ try {
     throw new Error("Database could not be opened: " + e);
 }
 
-export let showReservedHours= async (req, res) => {
-    const stmt = await db.prepare("SELECT * FROM Reservation where Date = ? ORDER BY Hour ASC", req.params.date);
-    const reservations = await stmt.all();
-    await stmt.finalize();
-    return reservations;
-}
+
 
 export let showFreeCoaches= async (req, res) => {
     const stmt = await db.prepare("SELECT * FROM Coach where id NOT IN (SELECT CoachId FROM Reservation WHERE Date = ?)", req.params.date);
@@ -60,5 +55,21 @@ export let deleteReservation= async (req) => {
 
 export let updateReservation= async (req) => {
     res.redirect("/reservation/" + req.params.id);
+}
+
+export let getReservedHours= async (date) => {
+    console.log(date);
+    const stmt = await db.prepare("SELECT * FROM Reservation where res_date = ? ORDER BY start_time ASC", date);
+    const reservations = await stmt.all();
+    await stmt.finalize();
+    return reservations;
+}
+
+
+export let addReservation= async (req, res) => {
+    const stmt = await db.prepare("INSERT INTO Reservation(res_date, Hour, CoachId, CourtId, UserId) VALUES(?,?,?,?,?)");
+    await stmt.run(req.body.date, req.body.time, req.body.coach, req.body.court, req.session.user.id);
+    await stmt.finalize();
+    res.redirect("/profile");
 }
 
