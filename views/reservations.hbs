@@ -1,3 +1,7 @@
+<link rel="stylesheet" href="res_style.css">
+{{!-- <script src="res_script.js" defer></script> --}}
+<script src="test.js" defer></script>
+
 <div class="py-4">
     <h3 class="text-center"> Make your reservation</h3>
     <hr>
@@ -6,7 +10,20 @@
 <div class="container-fluid d-flex justify-content-center p-sm-3" id="inputContainer">
 
     <label class="mx-2 fw-bold" for="date">Select Date: </label>
-    <input class="mx-2" type="date" id="date" name="date" />
+    <input class="mx-2" type="date" id="dateInput" name="date" />
     <button id="generateButton">Search</button>
+</div>
+
+<div class="container-fluid justify-content-center p-sm-3" id="gridContainer">
+    {{!-- {{#each reservations }}
+    <div class="grid-item">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{this.time}}</h5>
+                <p class="card-text">Available</p>
+                <button class="btn btn-primary" id="reserveButton" data-id="{{this.id}}">Reserve</button>
+            </div>
+        </div>
+    {{/each}} --}}
 
 </div>

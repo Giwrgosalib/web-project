@@ -1,5 +1,3 @@
-const model=await import("../model/model.mjs");
-
 document.addEventListener('DOMContentLoaded', function () {
     const generateButton = document.getElementById('generateButton');
     generateButton.addEventListener('click', generateGrid);})
@@ -7,21 +5,20 @@ document.addEventListener('DOMContentLoaded', function () {
     function generateGrid() {
       const dateInput = document.getElementById('dateInput');
       const selectedDate = dateInput.value;
-      const data=model.showReservedHours(selectedDate);
+
       if (!selectedDate) {
         alert('Please select a date!');
         return;
       }
   
-      fetch(`/reservation?date=${selectedDate}`)
+      fetch(`/reservations?date=${selectedDate}`)
         .then(function (response) {
           if (!response.ok) {
             throw new Error('Network response was not OK');
           }
-          return response.json();
         })
-        .then(function (data) {
-          updateGrid(data);
+        .then(function (selectedDate) {
+          updateGrid(selectedDate);
         })
         .catch(function (error) {
           console.error('Error:', error);
@@ -34,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
       
         const dateCell = document.createElement('div');
         dateCell.classList.add('date-cell');
-        dateCell.textContent = data.selectedDate;
+        dateCell.textContent = selectedDate;
         gridContainer.appendChild(dateCell);
       
         const timeCell = document.createElement('div');

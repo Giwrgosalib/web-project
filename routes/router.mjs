@@ -16,6 +16,6 @@ router.route('/logout').get((req, res) => {
     res.redirect('/home');
 });
 router.route('/contactus').get(controller.showContactUs);
-router.route('/reservation').get(controller.checkAuthentication, controller.showReservation).post(controller.checkAuthentication, controller.addReservation); 
-
+router.route('/reservations').get(controller.checkAuthentication, controller.showResButton).post(controller.checkAuthentication, controller.addReservation);
+router.get('/reservations/data/:date', controller.showReservedHours);
 export default router;
