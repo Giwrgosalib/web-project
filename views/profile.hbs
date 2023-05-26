@@ -82,7 +82,7 @@
         </li>
         <li class="list-group-item">
             <div class="row">
-                <button type="button" id="editButton" class="btn btn-dark w-100">Change</bur>
+                <button type="button" id="editButton" class="btn btn-dark w-100">Edit Profile</button>
             </div>
         </li>
         
@@ -171,12 +171,13 @@
                                     <td>{{this.res_date}}</td>
                                     <td>{{this.start_time}}</td>
                                     <td> {{this.Court_type}}</td>
-                                    <td><a href="profile/delete/{{this.resid}}" class="btn btn-danger">Delete</a></td>
                                     {{#unless is_past}}
-                                    <td><a href="/edit/{{this.resid}}" class="btn btn-primary">Edit</a></td>
+                                    <td><button onclick="confirmDelete({{this.resid}})" class="btn btn-danger">Cancel</button></td>
+                                    <td><p>Upcoming</p></td>
                                     {{/unless}}
                                     {{#if is_past}}
-                                    <td><p></p></td>
+                                    <td><button href="profile/delete/{{this.resid}}" class="btn btn-danger" >Delete</button></td>
+                                    <td><p>Past</p></td>
                                     {{/if}}
                                 </tr>
                             {{/each}}
@@ -218,5 +219,12 @@
     profileForm.submit();}
   });
 });
+function confirmDelete(id){
+    if(confirm("Are you sure you want to cancel this reservation?")){
+        window.location.href = "profile/delete/"+id;
+    }
+    else{
+        return;
+}}
     </script>
 </div>
