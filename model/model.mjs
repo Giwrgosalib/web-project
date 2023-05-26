@@ -48,9 +48,9 @@ export let updateUser= async (req, res) => {
     await stmt.finalize();
 }
 
-export let deleteReservation= async (req) => {
+export let deleteReservation= async (id) => {
     const stmt = await db.prepare("DELETE FROM Reservation WHERE resid = ?");
-    await stmt.run(req.params.id);
+    await stmt.run(id);
     await stmt.finalize();
 }
 
