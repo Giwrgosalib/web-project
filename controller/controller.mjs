@@ -109,7 +109,6 @@ export async function showResButton(req, res) {
 
 export async function showReservedHours(req,res) {
     try{
-        console.log(req.params.date);
         const reservations = await model.getReservedHours(req.params.date);
         res.json(reservations);
     }catch (e) {
@@ -127,3 +126,13 @@ export async function addReservation(req, res) {
     }
 }
 
+export async function showFreeCoaches(req, res) {
+    try{
+        console.log(req.params.date);
+        const coaches = await model.showFreeCoaches(req.params.date, req.params.time);
+        res.json(coaches);
+    }
+    catch (e) {
+        console.log(e);
+    }
+}

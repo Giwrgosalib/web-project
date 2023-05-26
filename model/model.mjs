@@ -12,9 +12,10 @@ try {
 
 
 
-export let showFreeCoaches= async (req, res) => {
-    const stmt = await db.prepare("SELECT * FROM Coach where id NOT IN (SELECT CoachId FROM Reservation WHERE Date = ?)", req.params.date);
+export let showFreeCoaches= async (date,time) => {
+    const stmt = await db.prepare("SELECT * FROM Coach where id NOT IN (SELECT coach_id FROM Reservation WHERE res_date= ? and start_time=? )",date,time );
     const coaches = await stmt.all();
+    console.log(coaches);
     await stmt.finalize();
     return coaches;
 }
@@ -58,7 +59,6 @@ export let updateReservation= async (req) => {
 }
 
 export let getReservedHours= async (date) => {
-    console.log(date);
     const stmt = await db.prepare("SELECT * FROM Reservation where res_date = ? ORDER BY start_time ASC", date);
     const reservations = await stmt.all();
     await stmt.finalize();

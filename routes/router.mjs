@@ -20,4 +20,5 @@ router.route('/profile').post(controller.checkAuthentication, controller.updateU
 router.get('/profile/delete:resid', controller.deleteReservation);
 router.route('/reservations').get(controller.checkAuthentication, controller.showResButton).post(controller.checkAuthentication, controller.addReservation);
 router.get('/reservations/data/:date', controller.showReservedHours);
+router.get('/reservations/data/coaches/:date/:time', controller.showFreeCoaches);
 export default router;
