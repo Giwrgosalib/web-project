@@ -302,7 +302,7 @@ async function submitReservation() {
         body: JSON.stringify(payload),
       })
       .then((res)=>res.json())
-      .then((res)=>window.location.href=res.url)
+      .then((res)=>{window.location.href=res.url;})
       .catch((err) => console.log(err));
 
 }
