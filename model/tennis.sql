@@ -94,5 +94,12 @@ INSERT INTO  Reservation (resid, user_id, court_id, coach_id, res_date, start_ti
 INSERT INTO  Reservation (resid, user_id, court_id, coach_id, res_date, start_time,is_past) VALUES (18, 5, 6, 2, "2023-02-01", "14:00:00",1);
 INSERT INTO  Reservation (resid, user_id, court_id, coach_id, res_date, start_time,is_past) VALUES (19, 5, 6, 2, "2023-03-15", "12:00:00",1);
 INSERT INTO  Reservation (resid, user_id, court_id, coach_id, res_date, start_time,is_past) VALUES (20, 5, 5, 2, "2023-05-30", "17:00:00", 0);
+INSERT INTO  Reservation (resid, user_id, court_id, coach_id, res_date, start_time,is_past) VALUES (21, 2, 1, 3, "2023-06-01", "16:00:00",0);
+INSERT INTO  Reservation (resid, user_id, court_id, coach_id, res_date, start_time,is_past) VALUES (22, 3, 2, NULL, "2023-06-01", "11:00:00",0);
+INSERT INTO  Reservation (resid, user_id, court_id, coach_id, res_date, start_time,is_past) VALUES (23, 2, 4, 2, "2023-06-02", "9:00:00",0);
+INSERT INTO  Reservation (resid, user_id, court_id, coach_id, res_date, start_time,is_past) VALUES (24, 1, 5, NULL, "2023-05-31", "20:00:00",0);
+INSERT INTO  Reservation (resid, user_id, court_id, coach_id, res_date, start_time,is_past) VALUES (25, 2, 6, 1, "2023-06-02", "10:00:00",0);
+
+
 
 

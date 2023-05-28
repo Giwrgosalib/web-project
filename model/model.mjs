@@ -9,10 +9,15 @@ try {
 } catch (e) {
     throw new Error("Database could not be opened: " + e);
 }
-
+//update is_past variable in db whenever the site is opened
+export let updatePast= async () => {
+    const stmt = await db.prepare("UPDATE Reservation SET is_past=1 WHERE res_date < date('now') OR (res_date = date('now') AND start_time < time('now'))");
+    await stmt.run();
+    await stmt.finalize();
+}
 //give free coaches
 export let showFreeCoaches= async (date,time) => {
-    let query="SELECT * FROM Coach where id NOT IN (SELECT coach_id FROM Reservation WHERE res_date=\""+date+"\" and (start_time=\""+time+"\" or start_time=time(\""+time+"\",\"+1 hour\")))";
+    let query="SELECT * FROM Coach where id NOT IN (SELECT coach_id FROM Reservation JOIN Coach on Coach.id=coach_id WHERE res_date=\""+date+"\" and (start_time=\""+time+"\" or start_time=time(\""+time+"\",\"-1 hour\")or start_time=time(\""+time+"\",\"+1 hour\")))";
     const stmt = await db.prepare(query);
     const coaches = await stmt.all();
     await stmt.finalize();
@@ -34,7 +39,7 @@ export let login= async (email, password) => {
 }
 //profile reservation history
 export let showReservationHistory= async (userId) => {
-    const stmt = await db.prepare("SELECT * FROM Reservation join Court on Reservation.court_id = Court.id WHERE user_id = ? ORDER BY res_date DESC, start_time DESC ");
+    const stmt = await db.prepare("SELECT resid,user_id,Court_type,coach.Name,res_date,is_past,start_time from Reservation left JOIN coach on coach_id=coach.id JOIN Court on court_id=Court.id WHERE user_id = ? ORDER BY res_date DESC, start_time DESC ");
     const reservations = await stmt.all(userId);
     await stmt.finalize();
     return reservations;

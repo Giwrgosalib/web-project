@@ -8,7 +8,7 @@ const controller=await import('../controller/controller.mjs');
 //define the routes
 router.route('/').get((req, res) => {
     res.redirect('/home');});
-router.route('/home').get(controller.showHome);
+router.route('/home').get(controller.updatePast,controller.showHome);
 router.route('/login').get(controller.showLogin).post(controller.login);
 router.route('/profile').get(controller.checkAuthentication, controller.showProfile);
 router.route('/facilities').get(controller.showFacilities);

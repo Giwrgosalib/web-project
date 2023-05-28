@@ -157,3 +157,12 @@ export async function sendMail(req, res) {
         console.log(e);
     }
 }
+//middleware to update the is_past field
+export async function updatePast(req, res, next) {
+    try{
+        await model.updatePast();
+        next();
+    }catch (e) {
+        console.log(e);
+    }
+}

@@ -1,6 +1,6 @@
 const form = document.getElementById("contactForm"); 
 
-//1.
+//submit event
 const formEvent = form.addEventListener("submit", (event) => {
   event.preventDefault();
  
@@ -8,11 +8,11 @@ const formEvent = form.addEventListener("submit", (event) => {
   const name=document.getElementById("name").value;
   const message=document.getElementById("message").value;
 
-  //3.
+  //send mail
   sendMail(mail, name, message);
 })
 
-
+//send mail info to server using Promise
 const sendMail = (email,name,message) => {
     const data = {email,name,message};
 

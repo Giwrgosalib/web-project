@@ -4,8 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   generateButton.addEventListener("click", generateGrid);
 });
 
-//get reservations for the selected date from the database and return them as a json object 
-
+//get reservations for the selected date from the database and return them as json  
 async function getReservations(selectedDate) {
   const url = "/reservations/data/" + selectedDate;
   return fetch(url)
@@ -25,26 +24,28 @@ async function generateGrid() {
       alert("Please select a date!");
       return;
   }
+  //get reservations for the selected date
   let reservations = {};
   reservations = await getReservations(selectedDate);
   selectedDate = selectedDate.split("-").reverse().join("-");
 
-  //format date like MM/DD/YYYY
+  //format date like DD/MM/YYYY
   selectedDate = selectedDate.split("-");
   selectedDate = selectedDate[1] + "/" + selectedDate[0] + "/" + selectedDate[2];
-
+//empty the grid container if it already exists
   if (document.getElementById("gridContainer") != null) {
       const gridContainer = document.getElementById("gridContainer");
       gridContainer.innerHTML = "";
   }
   else {
+    //create the grid container
       const gridContainer = document.createElement("div");
       gridContainer.classList.add("container");
       inputContainer.parentNode.insertBefore(gridContainer, inputContainer.nextSibling);
       gridContainer.innerHTML = "";
       gridContainer.setAttribute("id", "gridContainer");
   }
-
+ //create a prompt for the user
   if (document.getElementById("prompt") != null) {
       const prompt = document.getElementById("prompt");
       prompt.innerHTML = "Select a time slot to make a reservation for the corresponding court:";
@@ -56,7 +57,7 @@ async function generateGrid() {
       prompt.textContent = "Select a time slot to make a reservation for the corresponding court:";
       prompt.setAttribute("id", "prompt");
   }
-
+//create the date cell
   const dateCell = document.createElement("div");
   dateCell.classList.add("date-cell");
   dateCell.textContent = selectedDate;
@@ -66,7 +67,7 @@ async function generateGrid() {
   timeCell.classList.add("hour-cell");
   timeCell.textContent = "Time";
   gridContainer.appendChild(timeCell);
-
+//create the court title cells
   for (let court = 1; court < 7; court++) {
       const courtCell = document.createElement("div");
       courtCell.classList.add("court-tittle");
@@ -79,14 +80,14 @@ async function generateGrid() {
 
       gridContainer.appendChild(courtCell);
   }
-
+//create the hour cells
   for (let hour = 9; hour < 22; hour++) {
       const hourCell = document.createElement("div");
       hourCell.classList.add("hour-cell");
       hourCell.textContent = `${formatTime(hour)}`;
       gridContainer.appendChild(hourCell);
 
-
+//create the court reservation cells
       for (let court = 0; court < 6; court++) {
           const courtCell = document.createElement("div");
           courtCell.classList.add("court-cell");
@@ -140,87 +141,85 @@ async function generateGrid() {
 function makeReservation(event) {
   const courtCell = event.currentTarget;
   if (courtCell.firstChild.classList.contains("Available")) {
-      courtCell.firstChild.classList.remove("Available");
-      courtCell.firstChild.classList.add("reservation");
-      courtCell.firstChild.textContent = "+";
-      courtCell.classList.add("reservation");
-      courtCell.addEventListener("click", cancelReservation);
       let id = courtCell.getAttribute("id");
       let court = id.split("_")[0].split(":")[1];
       let hour = id.split("_")[1].split(":")[1];
       hour = parseInt(hour);
       let nextHourCell = document.getElementById(`court:${court}_hour:${hour + 1}`);
+      if (nextHourCell != null && !nextHourCell.classList.contains("reserved")) {      
+            courtCell.firstChild.classList.remove("Available");
+            courtCell.firstChild.classList.add("reservation");
+            courtCell.firstChild.textContent = "+";
+            courtCell.classList.add("reservation");
+            courtCell.addEventListener("click", cancelReservation);
       if (nextHourCell != null && !nextHourCell.classList.contains("reserved")) {
           nextHourCell.removeEventListener("click", makeReservation);
           nextHourCell.firstChild.classList.remove("Available");
           nextHourCell.firstChild.classList.add("reservation");
           nextHourCell.classList.add("reservation");
           nextHourCell.firstChild.textContent = "+";
-          nextHourCell.addEventListener("click", cancelReservation);
-      }
+      }}
+      if (nextHourCell==null){
+        courtCell.firstChild.classList.remove("Available");
+        courtCell.firstChild.classList.add("reservation");
+        courtCell.firstChild.textContent = "+";
+        courtCell.classList.add("reservation");
+        courtCell.addEventListener("click", cancelReservation);}
+
       const courtCells = document.querySelectorAll(".court-cell");
-      for (let i = 0; i < courtCells.length; i++) {
-          courtCells[i].removeEventListener("click", makeReservation);
+      for (const element of courtCells) {
+          element.removeEventListener("click", makeReservation);
       }
   }
   generateCoaches();
 }
 //clear the last reservation and make the court available again
 function cancelReservation(event) {
-  const courtCell = event.currentTarget;
-  let id = courtCell.getAttribute("id");
-  let court = id.split("_")[0].split(":")[1];
-  let hour = id.split("_")[1].split(":")[1];
-  hour = parseInt(hour);
-  let prevHourCell = document.getElementById(`court:${court}_hour:${hour - 1}`);
-  if (prevHourCell != null && prevHourCell.firstChild.classList.contains("reservation")) {
-      prevHourCell.firstChild.classList.remove("reservation");
-      prevHourCell.firstChild.classList.add("Available");
-      prevHourCell.firstChild.textContent = "ADD";
-      prevHourCell.classList.remove("reservation");
-      prevHourCell.addEventListener("click", makeReservation);
-  }
-  if (courtCell.firstChild.classList.contains("reservation")) {
-      courtCell.firstChild.classList.remove("reservation");
-      courtCell.firstChild.classList.add("Available");
-      courtCell.firstChild.textContent = "ADD";
-      courtCell.classList.remove("reservation");
-      courtCell.addEventListener("click", makeReservation);
-  }
-  let nextHourCell = document.getElementById(`court:${court}_hour:${hour + 1}`);
-  if (nextHourCell != null && nextHourCell.classList.contains("reservation")) {
-      nextHourCell.firstChild.classList.remove("reservation");
-      nextHourCell.firstChild.classList.add("Available");
-      nextHourCell.firstChild.textContent = "";
-      nextHourCell.classList.remove("reservation");
-      nextHourCell.addEventListener("click", makeReservation);
-  }
-  let nextHourCell2 = document.getElementById(`court:${court}_hour:${hour + 2}`);
-  if (nextHourCell2 != null && nextHourCell2.classList.contains("reserved")) {
-      nextHourCell.firstChild.classList.remove("Available");
-      nextHourCell.removeEventListener("click", makeReservation);
-  }
-
-  const courtCells = document.querySelectorAll(".court-cell");
-  for (const element of courtCells) {
-      if (element.firstChild.classList.contains("Available")) {
-          element.addEventListener("click", makeReservation);
-      }
-  }
+    const courtCell = event.currentTarget;
+    let id = courtCell.getAttribute("id");
+    let court = id.split("_")[0].split(":")[1];
+    let hour = id.split("_")[1].split(":")[1];
+    hour = parseInt(hour);
+    let nextHourCell = document.getElementById(`court:${court}_hour:${hour + 1}`);
+    let nextHourCell2=document.getElementById(`court:${court}_hour:${hour + 2}`)
+    if (nextHourCell != null && nextHourCell.classList.contains("reservation")) {
+        nextHourCell.firstChild.classList.remove("reservation");
+        nextHourCell.firstChild.classList.add("Available");
+        nextHourCell.classList.remove("reservation");
+        nextHourCell.firstChild.textContent = "ADD";
+        if(nextHourCell2!=null&&!nextHourCell2.classList.contains("reserved")){
+            nextHourCell.addEventListener("click", makeReservation);
+        }else if(nextHourCell2!=null&&nextHourCell2.classList.contains("reserved")){
+            nextHourCell.firstChild.classList.remove("Available");
+            nextHourCell.firstChild.textContent = "";
+            nextHourCell.classList.remove("Available");
+        }}
+    courtCell.firstChild.classList.remove("reservation");
+    courtCell.firstChild.classList.add("Available");
+    courtCell.classList.remove("reservation");
+    courtCell.firstChild.textContent = "ADD";
+    const courtCells = document.querySelectorAll(".court-cell");
+    for (const element of courtCells) {
+        element.addEventListener("click", makeReservation);
+    }
+    
 }
 
-
+//format time
 function formatTime(time) {
   return time.toString().padStart(2, "0") + ":00" + ":00";
 }
-
-let today = new Date().toISOString().split('T')[0];
+//max and min date of input
+let tomorrow = new Date();
+tomorrow.setDate(tomorrow.getDate() + 1);
+tomorrow = tomorrow.toISOString().split('T')[0];
 let maxDate = new Date();
 maxDate.setDate(maxDate.getDate() + 7);
 maxDate = maxDate.toISOString().split('T')[0];
-document.getElementById("dateInput").setAttribute('min', today);
+document.getElementById("dateInput").setAttribute('min', tomorrow);
 document.getElementById("dateInput").setAttribute('max', maxDate);
 
+//get coaches 
 async function getCoaches(date, time) {
   const url = `reservations/data/coaches/${date}/${time}`;
   return fetch(url)
@@ -234,6 +233,9 @@ async function generateCoaches() {
   const dateInput = document.getElementById("dateInput");
   const selectedDate = dateInput.value;
   const courtReservation = document.querySelector(".reservation");
+  if(courtReservation == null) {
+        return;
+  }
   let time = courtReservation.getAttribute("id").split("_")[1].split(":")[1];
   time = formatTime(time);
   const coaches = await getCoaches(selectedDate, time);
@@ -276,7 +278,7 @@ async function generateCoaches() {
 
 }
 
-
+//submit reservation and add it in db
 async function submitReservation() {
   const dateInput = document.getElementById("dateInput");
   const date = dateInput.value;
