@@ -5,7 +5,7 @@ import session from "express-session";
 
 // Create an Express application
 const app = new express();
-const port=process.env.PORT || 3000;
+const port=process.env.PORT || 8080;
 
 
 app.use(express.urlencoded({extended: false})); // Parse URL-encoded bodies
