@@ -17,5 +17,7 @@
     "nodemailer": "^6.9.2",
     "nodemon": "^2.0.22",
     "sqlite-async": "^1.2.0"
-  }
+  },
+  "engines":{
+    "node": "18.16.0"}
 }
