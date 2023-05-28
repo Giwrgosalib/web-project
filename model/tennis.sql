@@ -98,7 +98,7 @@ INSERT INTO  Reservation (resid, user_id, court_id, coach_id, res_date, start_ti
 INSERT INTO  Reservation (resid, user_id, court_id, coach_id, res_date, start_time,is_past) VALUES (22, 3, 2, NULL, "2023-06-01", "11:00:00",0);
 INSERT INTO  Reservation (resid, user_id, court_id, coach_id, res_date, start_time,is_past) VALUES (23, 2, 4, 2, "2023-06-02", "9:00:00",0);
 INSERT INTO  Reservation (resid, user_id, court_id, coach_id, res_date, start_time,is_past) VALUES (24, 1, 5, NULL, "2023-05-31", "20:00:00",0);
-INSERT INTO  Reservation (resid, user_id, court_id, coach_id, res_date, start_time,is_past) VALUES (25, 2, 6, 1, "2023-06-02", "10:00:00",0);
+INSERT INTO  Reservation (resid, user_id, court_id, coach_id, res_date, start_time,is_past) VALUES (25, 5, 6, 1, "2023-06-02", "10:00:00",0);
 
 
 

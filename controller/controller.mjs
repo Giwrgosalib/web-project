@@ -2,9 +2,6 @@ import nodemailer from "nodemailer";
 
 const model=await import("../model/model.mjs");
 
-
-
-
 //render the profile page
 export async function showProfile(req, res) {
     try{
