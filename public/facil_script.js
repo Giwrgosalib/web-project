@@ -1,3 +1,5 @@
+
+// This script is used to initialize the photo carousel and attach click event listeners to all images with the class 'img-fluid'
 document.addEventListener('DOMContentLoaded', function () {
     // Initialize the photo carousel
     const carousel = document.querySelector('.carousel');

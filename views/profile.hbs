@@ -1,3 +1,5 @@
+<script src="profile_script.js" defer></script>
+
 <div class="container-fluid bg-secondary-subtle bg-gradient">
     {{#with user}}
     <ul class="list-group">
@@ -82,7 +84,7 @@
         </li>
         <li class="list-group-item">
             <div class="row">
-                <button type="button" id="editButton" class="btn btn-dark w-100">Change</bur>
+                <button type="button" id="editButton" class="btn btn-dark w-100">Edit Profile</button>
             </div>
         </li>
         
@@ -145,6 +147,7 @@
                     </div>
                 </div>
             </li>
+            <li class="list-group-item"><div id="error"></div></li>
             <li class="list-group-item">
             <button id="saveButton" class="btn btn-dark w-100">Save Changes</button>
             </li>
@@ -163,6 +166,9 @@
                                     <th>Date</th>
                                     <th>Time</th>
                                     <th>Court</th>
+                                    <th>Coach</th>
+                                    <th></th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -171,12 +177,19 @@
                                     <td>{{this.res_date}}</td>
                                     <td>{{this.start_time}}</td>
                                     <td> {{this.Court_type}}</td>
-                                    <td><a href="profile/delete/{{this.resid}}" class="btn btn-danger">Delete</a></td>
+                                    {{#if Name}}
+                                    <td>{{this.Name}}</td>
+                                    {{else}}
+                                    <td>No Coach</td>
+                                    {{/if}}
+                                    
                                     {{#unless is_past}}
-                                    <td><a href="/edit/{{this.resid}}" class="btn btn-primary">Edit</a></td>
+                                    <td><button onclick="confirmDelete({{this.resid}})" class="btn btn-danger">Cancel</button></td>
+                                    <td><p>Upcoming</p></td>
                                     {{/unless}}
                                     {{#if is_past}}
-                                    <td><p></p></td>
+                                    <td><button href="profile/delete/{{this.resid}}" class="btn btn-danger" >Delete</button></td>
+                                    <td><p>Past</p></td>
                                     {{/if}}
                                 </tr>
                             {{/each}}
@@ -188,35 +201,5 @@
         </li>
     </ul>
     
-    <script>
-        "use strict";
-        document.addEventListener('DOMContentLoaded', () => {
-  const editButton = document.getElementById('editButton');
-  const profileForm = document.getElementById('profileForm');
-  const saveButton = document.getElementById('saveButton');
-  const passwordInput = document.getElementById('passwordInput');
-  const passwordConfirmInput = document.getElementById('passwordConfirmInput');
-
-//check if passwords match
-  editButton.addEventListener('click', () => {
-    // Toggle the visibility of the form
-    profileForm.style.display = profileForm.style.display === 'none' ? 'block' : 'none';
-  });
-
-  saveButton.addEventListener('click', () => {
-    // Check if the passwords match
-    if (passwordInput.value != passwordConfirmInput.value) {
-      alert('Passwords do not match');
-      return;
-    }
-    else if (passwordInput.value.length < 8) {
-      alert('Password must be at least 8 characters');
-      return;
-    }
-    else{
-    // Submit the form
-    profileForm.submit();}
-  });
-});
-    </script>
+    
 </div>

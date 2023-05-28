@@ -5,7 +5,6 @@ CREATE TABLE IF NOT EXISTS User (
 	Registration_Date date,
 	date_of_birth date,
 	Password varchar(60),
-	is_Admin boolean,
 	Address varchar,
 	Phone integer,
 	Mobile integer,
@@ -13,7 +12,6 @@ CREATE TABLE IF NOT EXISTS User (
 	CONSTRAINT phone CHECK (Phone>0),
 	CONSTRAINT mobile CHECK (Mobile>0),
 	CONSTRAINT emailaccept CHECK (Email LIKE '%@%'),
-	CONSTRAINT admin CHECK (is_Admin=0 OR is_Admin=1),
 	CONSTRAINT name CHECK (Name NOT LIKE '%[0-9]%'),
 	CONSTRAINT address CHECK (Address NOT LIKE '%[0-9]%'),
 	CONSTRAINT phoneISNUMBER CHECK (Phone NOT LIKE '%[a-z]%'),
@@ -43,7 +41,6 @@ CREATE TABLE IF NOT EXISTS Reservation (
 CREATE TABLE IF NOT EXISTS Court (
 	id integer ,
 	Court_type varchar,
-	availability boolean,
 	PRIMARY KEY (id)
 	
 );
@@ -53,30 +50,29 @@ CREATE TABLE IF NOT EXISTS Coach (
 	Name varchar,
 	Phone integer,
 	date_of_birth date,
-	availability boolean,
 	PRIMARY KEY (id),
 	CONSTRAINT phone CHECK (Phone>0),
 	CONSTRAINT phoneISNUMBER CHECK (Phone NOT LIKE '%[a-z]%'),
 	CONSTRAINT name CHECK (Name NOT LIKE '%[0-9]%')
 );
 
-INSERT INTO  User (id, Email, Name, Registration_Date,date_of_birth, Password, is_Admin, Address, Phone, Mobile) VALUES (1, "ddtennis@tennis.gr","Dimitris Dimitriou", "2021-01-01","1980-10-5", "Dimitris123", 1, "Athens", 2101234567, 6971234567);
-INSERT INTO  User (id, Email, Name, Registration_Date,date_of_birth, Password, is_Admin, Address, Phone, Mobile) VALUES (2, "ss123@gmail.gr","Sofia Sofiou", "2023-03-06","1995-2-12", "Sofia123", 0, "Athens", 2101236667, 6971235567);
-INSERT INTO  User (id, Email, Name, Registration_Date, date_of_birth, Password, is_Admin, Address, Phone, Mobile) VALUES (3, "ad23@yahoo.com","Anna Dimitriou", "2022-8-10","2000-4-26", "Anna123", 0, "Athens", 2124345567, 6971234677);
-INSERT INTO  User(id, Email, Name, Registration_Date, date_of_birth, Password, is_Admin, Address, Phone, Mobile) VALUES (4, "Al834@gmail.com","Alexandros Papadopoulos","2023-3-4", "1998-3-25", "Alexpap834", 0, "Athens", 2101221367, 6933345647);
-INSERT INTO  User (id, Email, Name, Registration_Date,date_of_birth, Password, is_Admin, Address, Phone, Mobile) VALUES (5, "mm536@outlook.com","Maria Mavrou", "2022-11-11","1975-9-12","Maria536", 0, "Athens", 2109999999, 6980393939);
+INSERT INTO  User (id, Email, Name, Registration_Date,date_of_birth, Password,  Address, Phone, Mobile) VALUES (1, "dd732@gmail.com","Dimitris Dimitriou", "2021-01-01","1980-10-5", "Dimitris123",  "Athens", 2101234567, 6954234567);
+INSERT INTO  User (id, Email, Name, Registration_Date,date_of_birth, Password,  Address, Phone, Mobile) VALUES (2, "ss123@gmail.com","Sofia Sofiou", "2023-03-06","1995-2-12", "Sofia123",  "Athens", 2101236667, 6971276567);
+INSERT INTO  User (id, Email, Name, Registration_Date, date_of_birth, Password,  Address, Phone, Mobile) VALUES (3, "ad23@yahoo.com","Anna Dimitriou", "2022-8-10","2000-4-26", "Anna123",  "Athens", 2124345567, 6971267677);
+INSERT INTO  User(id, Email, Name, Registration_Date, date_of_birth, Password,  Address, Phone, Mobile) VALUES (4, "Al834@gmail.com","Alexandros Papadopoulos","2023-3-4", "1998-3-25", "Alexpap834",  "Athens", 2101221367, 6933345647);
+INSERT INTO  User (id, Email, Name, Registration_Date,date_of_birth, Password,  Address, Phone, Mobile) VALUES (5, "mm536@outlook.com","Maria Mavrou", "2022-11-11","1975-9-12","Maria536",  "Athens", 2109999999, 6980393939);
 
-INSERT INTO  Coach (id, Name, Phone, date_of_birth, availability) VALUES (1, "Dimitris Papadopoulos", 6987456987, "1990-01-01", 1);
-INSERT INTO  Coach (id, Name, Phone, date_of_birth, availability) VALUES (2, "Maria Georgiou", 6912365455, "1995-04-26", 1);
-INSERT INTO  Coach (id, Name, Phone, date_of_birth, availability) VALUES (3, "Petros Konstantinou", 6985987456, "1975-07-12", 0);
-INSERT INTO  Coach (id, Name, Phone, date_of_birth, availability) VALUES (4, "Anna Papadopoulou", 6985256687, "1980-01-01", 1);
+INSERT INTO  Coach (id, Name, Phone, date_of_birth) VALUES (1, "Dimitris Papadopoulos", 6987456987, "1990-01-01");
+INSERT INTO  Coach (id, Name, Phone, date_of_birth) VALUES (2, "Maria Georgiou", 6912365455, "1995-04-26");
+INSERT INTO  Coach (id, Name, Phone, date_of_birth) VALUES (3, "Petros Konstantinou", 6985987456, "1975-07-12");
+INSERT INTO  Coach (id, Name, Phone, date_of_birth) VALUES (4, "Anna Papadopoulou", 6985256687, "1980-01-01");
 
-INSERT INTO  Court (id, Court_type, availability) VALUES (1, "Clay Court #1", 1);
-INSERT INTO  Court (id, Court_type, availability) VALUES (2, "Clay Court #2", 1);
-INSERT INTO  Court (id, Court_type, availability) VALUES (3, "Clay Court #3", 0);
-INSERT INTO  Court (id, Court_type, availability) VALUES (4, "Hard Court #1", 1);
-INSERT INTO  Court (id, Court_type, availability) VALUES (5, "Grass Court #1", 1);
-INSERT INTO  Court (id, Court_type, availability) VALUES (6, "Grass Court #2", 1);
+INSERT INTO  Court (id, Court_type) VALUES (1, "Clay Court #1");
+INSERT INTO  Court (id, Court_type) VALUES (2, "Clay Court #2");
+INSERT INTO  Court (id, Court_type) VALUES (3, "Clay Court #3");
+INSERT INTO  Court (id, Court_type) VALUES (4, "Hard Court #1");
+INSERT INTO  Court (id, Court_type) VALUES (5, "Grass Court #1");
+INSERT INTO  Court (id, Court_type) VALUES (6, "Grass Court #2");
 
 INSERT INTO  Reservation (resid, user_id, court_id, coach_id, res_date, start_time,is_past) VALUES (1, 2, 1, NULL, "2022-5-27", "11:00:00",1);
 INSERT INTO  Reservation (resid, user_id, court_id, coach_id, res_date, start_time,is_past) VALUES (2, 2, 3, 2, "2022-11-15", "9:00:00",1);
@@ -98,5 +94,12 @@ INSERT INTO  Reservation (resid, user_id, court_id, coach_id, res_date, start_ti
 INSERT INTO  Reservation (resid, user_id, court_id, coach_id, res_date, start_time,is_past) VALUES (18, 5, 6, 2, "2023-02-01", "14:00:00",1);
 INSERT INTO  Reservation (resid, user_id, court_id, coach_id, res_date, start_time,is_past) VALUES (19, 5, 6, 2, "2023-03-15", "12:00:00",1);
 INSERT INTO  Reservation (resid, user_id, court_id, coach_id, res_date, start_time,is_past) VALUES (20, 5, 5, 2, "2023-05-30", "17:00:00", 0);
+INSERT INTO  Reservation (resid, user_id, court_id, coach_id, res_date, start_time,is_past) VALUES (21, 2, 1, 3, "2023-06-01", "16:00:00",0);
+INSERT INTO  Reservation (resid, user_id, court_id, coach_id, res_date, start_time,is_past) VALUES (22, 3, 2, NULL, "2023-06-01", "11:00:00",0);
+INSERT INTO  Reservation (resid, user_id, court_id, coach_id, res_date, start_time,is_past) VALUES (23, 2, 4, 2, "2023-06-02", "9:00:00",0);
+INSERT INTO  Reservation (resid, user_id, court_id, coach_id, res_date, start_time,is_past) VALUES (24, 1, 5, NULL, "2023-05-31", "20:00:00",0);
+INSERT INTO  Reservation (resid, user_id, court_id, coach_id, res_date, start_time,is_past) VALUES (25, 2, 6, 1, "2023-06-02", "10:00:00",0);
+
+
 
 
