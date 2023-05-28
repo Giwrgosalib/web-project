@@ -22,6 +22,5 @@ const sendMail = (email,name,message) => {
             "Content-type": "application/json"},
         body: JSON.stringify(data), 
     }).then((res) =>res.json())
-    .then((res)=>{window.location.href = res.url;})
     .catch((error) => { console.log(error)});
   };
