@@ -152,7 +152,7 @@ export async function sendMail(req, res) {
             text: `${req.body.message}`
         };
         await transporter.sendMail(options);
-        res.json({success: true, url: "/home"})
+        res.redirect("/home");
     }catch (e) {
         console.log(e);
     }

@@ -16,9 +16,10 @@ router.route('/logout').get((req, res) => {
     req.session.destroy();
     res.redirect('/home');
 });
-router.route('/contactus').get(controller.showContactUs).post(controller.sendMail);
-router.route('/profile').post(controller.checkAuthentication, controller.updateUser);
+router.route('/contactus').get(controller.showContactUs);
+router.post('/send', controller.sendMail);
 
+router.route('/profile').post(controller.checkAuthentication, controller.updateUser);
 router.route('/profile/delete/:resid').get(controller.deleteReservation);
 
 router.route('/reservations').get(controller.checkAuthentication, controller.showResButton).post(controller.checkAuthentication, controller.addReservation);
